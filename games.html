@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Amazing Games – Our Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+    }
+
+    header {
+      background: #020617;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: #38bdf8;
+      margin-left: 18px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 40px 0 10px;
+    }
+
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .game-card {
+      position: relative;
+      background: #020617;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .game-card:hover {
+      transform: scale(1.04);
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .game-info {
+      padding: 15px;
+    }
+
+    .game-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .game-visits {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .game-card:hover .overlay {
+      opacity: 1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <img src="logo.png" alt="Amazing Games Logo" style="height:42px;">
+    <h2 style="margin:0;">Amazing Games</h2>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="about.html">About</a>
+    <a href="apply.html">Apply</a>
+    <a href="https://discord.gg/KDgXznhSsc" target="_blank">Discord</a>
+  </nav>
+</header>
+
+<h1>Our Games</h1>
+
+<div class="games">
+
+  <!-- Prison Island -->
+  <div class="game-card" onclick="window.open('https://www.roblox.com/games/92661235863904/Prison-Island')">
+    <img id="thumb-prison">
+    <div class="overlay">
+      <p>Escape or enforce the law on a remote prison island where chaos breaks out between prisoners, criminals, and police.</p>
+    </div>
+    <div class="game-info">
+      <div class="game-title">🔥 Prison Island</div>
+      <div class="game-visits">Visits: Live</div>
+    </div>
+  </div>
+
+  <!-- 99 Rooms -->
+  <div class="game-card" onclick="window.open('https://www.roblox.com/games/97441539448665/99-Rooms-in-a-basement')">
+    <img id="thumb-99">
+    <div class="overlay">
+      <p>Survive a dark basement, solve puzzles, uncover secrets, and escape before the horrors reach you.</p>
+    </div>
+    <div class="game-info">
+      <div class="game-title">🚪 99 Rooms in a Basement</div>
+      <div class="game-visits">Visits: Live</div>
+    </div>
+  </div>
+
+  <!-- Eat Food -->
+  <div class="game-card" onclick="window.open('https://www.roblox.com/games/74672529469747/Eat-Food-To-Grow-Bigger')">
+    <img id="thumb-eat">
+    <div class="overlay">
+      <p>Eat, grow, rebirth, and become a massive giant as you dominate the world and climb the leaderboard.</p>
+    </div>
+    <div class="game-info">
+      <div class="game-title">🍔 Eat Food To Grow Bigger!</div>
+      <div class="game-visits">Visits: Live</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2025 Amazing Games
+</footer>
+
+<!-- ROBLOX THUMBNAIL SCRIPT -->
+<script>
+  async function loadGameThumbnail(gameId, imgId) {
+    try {
+      const response = await fetch(
+        `https://thumbnails.roblox.com/v1/games/icons?gameIds=${gameId}&size=512x512&format=Png&isCircular=false`
+      );
+      const data = await response.json();
+
+      const img = document.getElementById(imgId);
+      if (data.data && data.data[0] && data.data[0].imageUrl) {
+        img.src = data.data[0].imageUrl;
+      } else {
+        img.src = "logo.png";
+      }
+
+      img.onerror = () => img.src = "logo.png";
+    } catch (error) {
+      console.error("Thumbnail failed:", error);
+      document.getElementById(imgId).src = "logo.png";
+    }
+  }
+
+  loadGameThumbnail("92661235863904", "thumb-prison");
+  loadGameThumbnail("97441539448665", "thumb-99");
+  loadGameThumbnail("74672529469747", "thumb-eat");
+</script>
+
+</body>
+</html>
