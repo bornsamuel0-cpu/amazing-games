@@ -63,14 +63,12 @@ section h2 {
 .hero-content img {
   width: 350px;
   margin-bottom: 26px;
-
   filter:
-    drop-shadow(0 0 40px rgba(56,189,248,0.8))
-    drop-shadow(0 0 90px rgba(56,189,248,0.6))
-    drop-shadow(0 0 160px rgba(99,102,241,0.45))
-    drop-shadow(0 0 260px rgba(99,102,241,0.35));
+    drop-shadow(0 0 60px rgba(56,189,248,.9))
+    drop-shadow(0 0 140px rgba(56,189,248,.7))
+    drop-shadow(0 0 260px rgba(99,102,241,.55))
+    drop-shadow(0 0 420px rgba(99,102,241,.45));
 }
-
 
 .hero h1 {
   font-size: 4.3rem;
@@ -160,26 +158,6 @@ section h2 {
   font-weight: 900;
 }
 
-/* APPLY */
-.apply-box {
-  background: rgba(255,255,255,.07);
-  padding: 42px;
-  border-radius: 22px;
-  margin: 32px auto;
-  max-width: 640px;
-}
-
-.apply-box a {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 14px 30px;
-  background: #38bdf8;
-  color: black;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: 900;
-}
-
 /* ABOUT */
 .about p {
   font-size: 1.2rem;
@@ -208,7 +186,6 @@ footer a {
 <nav>
   <a href="#home">Home</a>
   <a href="#games">Games</a>
-  <a href="#apply">Apply</a>
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
 </nav>
@@ -234,6 +211,8 @@ footer a {
         <span>Games</span>
       </div>
     </div>
+
+    <p id="lastUpdated" style="opacity:.6;font-size:.9rem;margin-top:14px;"></p>
   </div>
 </section>
 
@@ -241,27 +220,6 @@ footer a {
 <section id="games">
   <h2>Our Games</h2>
   <div class="games-grid" id="gamesGrid"></div>
-</section>
-
-<!-- APPLY -->
-<section id="apply">
-  <h2>Apply</h2>
-
-  <div class="apply-box">
-    <h3>Apply for a Job</h3>
-    <p>Want to apply for a job? Fill out this Google Form to apply.</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScGb9I1iWpLjKjNDKYG8Qn1NDRFFimzN5p_SmoYYOw57-qL_A/viewform" target="_blank">
-      Apply for a Job
-    </a>
-  </div>
-
-  <div class="apply-box">
-    <h3>Looking for Investment?</h3>
-    <p>Submit your game and pitch it to Amazing Games for potential investment.</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSchT5pipyVwRRMcsIXe_RvsfjwI55topk29jd-uLuFlsLL8aQ/viewform" target="_blank">
-      Submit Your Game
-    </a>
-  </div>
 </section>
 
 <!-- ABOUT -->
@@ -272,9 +230,7 @@ footer a {
 
   <p>We focus on creating experiences that are not only fun to play, but also designed to succeed long-term through strong retention, smart monetization, and replayable core gameplay loops.</p>
 
-  <p>Our studio believes great Roblox games come from the balance of creativity and strategy. This means thoughtful game design, clean and optimized scripting, strong visual identity, polished UI, and monetization that enhances gameplay rather than hurting it.</p>
-
-  <p>Since our founding, Amazing Games has operated with a long-term mindset: build quality first, learn from every release, and continuously raise our standards.</p>
+  <p>Our studio believes great Roblox games come from the balance of creativity and strategy.</p>
 
   <p><strong>If it’s amazing, we build it.</strong></p>
 </section>
@@ -289,7 +245,7 @@ footer a {
 </section>
 
 <script>
-/* 🔴 CHANGE THIS TO YOUR WORKER STATS URL */
+/* 🔴 WORKER STATS URL */
 const WORKER_URL = "https://api.amazinggames.cloud/stats";
 
 /* STATIC GAME DEFINITIONS */
@@ -299,7 +255,7 @@ const games = [
   { id: 8168837991, name: "🍔 Eat Food To Grow Bigger!", placeId: 74672529469747 }
 ];
 
-/* RENDER GAME CARDS IMMEDIATELY */
+/* RENDER GAMES IMMEDIATELY */
 function renderGames() {
   const grid = document.getElementById("gamesGrid");
   grid.innerHTML = "";
@@ -320,11 +276,13 @@ function renderGames() {
   });
 }
 
-/* UPDATE STATS */
+/* FETCH STATS ON LOAD / REFRESH */
 async function updateStats() {
   try {
-    const res = await fetch(WORKER_URL);
+    const res = await fetch(WORKER_URL, { cache: "no-store" });
     const json = await res.json();
+
+    if (!json || !Array.isArray(json.data)) throw new Error("Invalid data");
 
     let totalPlayers = 0;
     let totalVisits = 0;
@@ -342,18 +300,17 @@ async function updateStats() {
 
     document.getElementById("totalPlayers").innerText = totalPlayers.toLocaleString();
     document.getElementById("totalVisits").innerText = totalVisits.toLocaleString();
+    document.getElementById("lastUpdated").innerText =
+      "Last updated: " + new Date().toLocaleTimeString();
 
   } catch (e) {
-    console.warn("Stats failed, retrying later");
+    console.warn("Stats unavailable (rate limit or cache)");
   }
 }
 
 /* INIT */
-renderGames();     // Always render cards
-updateStats();     // 1️⃣ Runs on page load / refresh
-
-setInterval(updateStats, 5 * 60 * 1000); // 3️⃣ Every 5 minutes
-
+renderGames();
+updateStats();
 </script>
 
 </body>
