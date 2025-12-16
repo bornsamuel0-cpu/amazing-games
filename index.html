@@ -278,10 +278,28 @@ function renderGames() {
 
 /* FETCH STATS ON LOAD / REFRESH */
 <script>
+<script>
 async function updateStats() {
   try {
-    const res = await fetch("https://api.amazinggames.cloud/stats");
-    const json = await res.json();
+    const res = await fetch("https://api.amazinggames.cloud/stats", {
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error("API returned " + res.status);
+    }
+
+    const text = await res.text();
+
+    // 🔒 Guard: make sure it's JSON
+    if (!text.trim().startsWith("{")) {
+      console.error("Non-JSON response:", text);
+      return;
+    }
+
+    const json = JSON.parse(text);
 
     if (!json.data) return;
 
@@ -292,26 +310,23 @@ async function updateStats() {
       totalPlayers += game.playing || 0;
       totalVisits += game.visits || 0;
 
-      const playersEl = document.getElementById(`players-${game.id}`);
-      const visitsEl = document.getElementById(`visits-${game.id}`);
+      const p = document.getElementById(`players-${game.id}`);
+      const v = document.getElementById(`visits-${game.id}`);
 
-      if (playersEl) playersEl.innerText = `👥 ${game.playing ?? 0}`;
-      if (visitsEl) visitsEl.innerText = `👁 ${game.visits?.toLocaleString() ?? 0}`;
+      if (p) p.innerText = `👥 ${game.playing ?? 0}`;
+      if (v) v.innerText = `👁 ${game.visits?.toLocaleString() ?? 0}`;
     });
 
     document.getElementById("totalPlayers").innerText = totalPlayers.toLocaleString();
     document.getElementById("totalVisits").innerText = totalVisits.toLocaleString();
 
   } catch (err) {
-    console.error("Stats load failed:", err);
+    console.warn("Stats unavailable:", err.message);
   }
 }
-</script>
 
-/* INIT */
-renderGames();
 updateStats();
-</script>
+
 
 </body>
 </html>
