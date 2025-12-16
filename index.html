@@ -54,7 +54,6 @@ section h2 {
 .hero {
   min-height: 100vh;
   padding-top: 140px;
-  padding-bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,12 +61,12 @@ section h2 {
 
 .hero-content img {
   width: 350px;
-  margin-bottom: 26px;
+  margin-bottom: 28px;
   filter:
-    drop-shadow(0 0 60px rgba(56,189,248,.9))
-    drop-shadow(0 0 140px rgba(56,189,248,.7))
-    drop-shadow(0 0 260px rgba(99,102,241,.55))
-    drop-shadow(0 0 420px rgba(99,102,241,.45));
+    drop-shadow(0 0 50px rgba(56,189,248,.9))
+    drop-shadow(0 0 120px rgba(56,189,248,.7))
+    drop-shadow(0 0 220px rgba(99,102,241,.55))
+    drop-shadow(0 0 340px rgba(99,102,241,.45));
 }
 
 .hero h1 {
@@ -158,6 +157,26 @@ section h2 {
   font-weight: 900;
 }
 
+/* APPLY */
+.apply-box {
+  background: rgba(255,255,255,.07);
+  padding: 42px;
+  border-radius: 22px;
+  margin: 32px auto;
+  max-width: 640px;
+}
+
+.apply-box a {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 14px 30px;
+  background: #38bdf8;
+  color: black;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 900;
+}
+
 /* ABOUT */
 .about p {
   font-size: 1.2rem;
@@ -186,6 +205,7 @@ footer a {
 <nav>
   <a href="#home">Home</a>
   <a href="#games">Games</a>
+  <a href="#apply">Apply</a>
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
 </nav>
@@ -211,8 +231,6 @@ footer a {
         <span>Games</span>
       </div>
     </div>
-
-    <p id="lastUpdated" style="opacity:.6;font-size:.9rem;margin-top:14px;"></p>
   </div>
 </section>
 
@@ -222,16 +240,33 @@ footer a {
   <div class="games-grid" id="gamesGrid"></div>
 </section>
 
+<!-- APPLY -->
+<section id="apply">
+  <h2>Apply</h2>
+
+  <div class="apply-box">
+    <h3>Apply for a Job</h3>
+    <p>Want to apply for a job? Fill out this Google Form to apply.</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScGb9I1iWpLjKjNDKYG8Qn1NDRFFimzN5p_SmoYYOw57-qL_A/viewform" target="_blank">
+      Apply for a Job
+    </a>
+  </div>
+
+  <div class="apply-box">
+    <h3>Looking for Investment?</h3>
+    <p>Submit your game and pitch it to Amazing Games for potential investment.</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSchT5pipyVwRRMcsIXe_RvsfjwI55topk29jd-uLuFlsLL8aQ/viewform" target="_blank">
+      Submit Your Game
+    </a>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section id="about" class="about">
   <h2>About Us</h2>
-
   <p>Amazing Games is an independent Roblox game studio founded in January 2025 with one clear mission: to invest in, build, and publish amazing games with real front-page potential.</p>
-
-  <p>We focus on creating experiences that are not only fun to play, but also designed to succeed long-term through strong retention, smart monetization, and replayable core gameplay loops.</p>
-
-  <p>Our studio believes great Roblox games come from the balance of creativity and strategy.</p>
-
+  <p>We focus on long-term success through strong retention, smart monetization, and replayable core gameplay loops.</p>
+  <p>We balance creativity and strategy: clean scripting, polished UI, strong visuals, and monetization that enhances gameplay.</p>
   <p><strong>If it’s amazing, we build it.</strong></p>
 </section>
 
@@ -245,62 +280,43 @@ footer a {
 </section>
 
 <script>
-/* 🔴 WORKER STATS URL */
-const WORKER_URL = "https://api.amazinggames.cloud/stats";
+const API_URL = "https://api.amazinggames.cloud/stats";
 
-/* STATIC GAME DEFINITIONS */
+/* STATIC GAME LIST (always renders) */
 const games = [
   { id: 7349544299, name: "🔥 Prison Island", placeId: 92661235863904 },
   { id: 6925763113, name: "🚪 99 Rooms in a Basement", placeId: 97441539448665 },
   { id: 8168837991, name: "🍔 Eat Food To Grow Bigger!", placeId: 74672529469747 }
 ];
 
-/* RENDER GAMES IMMEDIATELY */
 function renderGames() {
   const grid = document.getElementById("gamesGrid");
   grid.innerHTML = "";
 
-  games.forEach(game => {
+  games.forEach(g => {
     grid.innerHTML += `
       <div class="game-card">
-        <div class="game-thumb" style="background-image:url('https://tr.rbxcdn.com/${game.placeId}/768/432/Image/Png')">
-          <div class="game-title">${game.name}</div>
+        <div class="game-thumb" style="background-image:url('https://tr.rbxcdn.com/${g.placeId}/768/432/Image/Png')">
+          <div class="game-title">${g.name}</div>
         </div>
         <div class="game-footer">
-          <div id="players-${game.id}">👥 —</div>
-          <a class="play-btn" href="https://www.roblox.com/games/${game.placeId}" target="_blank">▶ PLAY</a>
-          <div id="visits-${game.id}">👁 —</div>
+          <div id="players-${g.id}">👥 —</div>
+          <a class="play-btn" href="https://www.roblox.com/games/${g.placeId}" target="_blank">▶ PLAY</a>
+          <div id="visits-${g.id}">👁 —</div>
         </div>
       </div>
     `;
   });
 }
 
-/* FETCH STATS ON LOAD / REFRESH */
-<script>
-<script>
 async function updateStats() {
   try {
-    const res = await fetch("https://api.amazinggames.cloud/stats", {
-      headers: {
-        "Accept": "application/json"
-      }
-    });
-
-    if (!res.ok) {
-      throw new Error("API returned " + res.status);
-    }
-
+    const res = await fetch(API_URL);
     const text = await res.text();
 
-    // 🔒 Guard: make sure it's JSON
-    if (!text.trim().startsWith("{")) {
-      console.error("Non-JSON response:", text);
-      return;
-    }
+    if (!text.trim().startsWith("{")) return;
 
     const json = JSON.parse(text);
-
     if (!json.data) return;
 
     let totalPlayers = 0;
@@ -319,14 +335,12 @@ async function updateStats() {
 
     document.getElementById("totalPlayers").innerText = totalPlayers.toLocaleString();
     document.getElementById("totalVisits").innerText = totalVisits.toLocaleString();
-
-  } catch (err) {
-    console.warn("Stats unavailable:", err.message);
-  }
+  } catch {}
 }
 
+renderGames();
 updateStats();
-
+</script>
 
 </body>
 </html>
