@@ -277,36 +277,36 @@ function renderGames() {
 }
 
 /* FETCH STATS ON LOAD / REFRESH */
+<script>
 async function updateStats() {
   try {
-    const res = await fetch(WORKER_URL, { cache: "no-store" });
+    const res = await fetch("https://api.amazinggames.cloud/stats");
     const json = await res.json();
 
-    if (!json || !Array.isArray(json.data)) throw new Error("Invalid data");
+    if (!json.data) return;
 
     let totalPlayers = 0;
     let totalVisits = 0;
 
     json.data.forEach(game => {
-      totalPlayers += game.playing;
-      totalVisits += game.visits;
+      totalPlayers += game.playing || 0;
+      totalVisits += game.visits || 0;
 
-      const players = document.getElementById(`players-${game.id}`);
-      const visits = document.getElementById(`visits-${game.id}`);
+      const playersEl = document.getElementById(`players-${game.id}`);
+      const visitsEl = document.getElementById(`visits-${game.id}`);
 
-      if (players) players.innerText = `👥 ${game.playing}`;
-      if (visits) visits.innerText = `👁 ${game.visits.toLocaleString()}`;
+      if (playersEl) playersEl.innerText = `👥 ${game.playing ?? 0}`;
+      if (visitsEl) visitsEl.innerText = `👁 ${game.visits?.toLocaleString() ?? 0}`;
     });
 
     document.getElementById("totalPlayers").innerText = totalPlayers.toLocaleString();
     document.getElementById("totalVisits").innerText = totalVisits.toLocaleString();
-    document.getElementById("lastUpdated").innerText =
-      "Last updated: " + new Date().toLocaleTimeString();
 
-  } catch (e) {
-    console.warn("Stats unavailable (rate limit or cache)");
+  } catch (err) {
+    console.error("Stats load failed:", err);
   }
 }
+</script>
 
 /* INIT */
 renderGames();
