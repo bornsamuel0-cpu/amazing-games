@@ -6,15 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
   font-family: Inter, Arial, sans-serif;
-  background: radial-gradient(circle at top, #0b1633, #050814);
   color: white;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(0,180,255,.18), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(120,0,255,.14), transparent 60%),
+    linear-gradient(180deg, #050b1d, #020617 65%);
 }
 
 /* NAV */
@@ -27,7 +28,7 @@ nav {
   justify-content: center;
   gap: 28px;
   padding: 18px;
-  background: rgba(5,8,20,0.75);
+  background: rgba(5,8,20,.75);
   backdrop-filter: blur(12px);
 }
 
@@ -35,39 +36,37 @@ nav a {
   color: #38bdf8;
   text-decoration: none;
   font-weight: 800;
-  font-size: 1.05rem;
 }
 
 /* SECTIONS */
 section {
-  padding: 90px 8%;
+  padding: 120px 8%;
   text-align: center;
 }
 
 /* HERO */
 .hero {
   min-height: 100vh;
-  padding-top: 140px;
-  padding-bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .hero-content img {
-  width: 350px; /* LOGO SIZE */
-  margin-bottom: 26px;
+  width: 160px;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 0 24px rgba(56,189,248,.45));
 }
 
 .hero h1 {
   font-size: 4.2rem;
-  margin: 10px 0;
+  margin: 12px 0;
 }
 
 .hero p {
   max-width: 720px;
   font-size: 1.25rem;
-  opacity: 0.9;
+  opacity: .9;
   margin: auto;
 }
 
@@ -75,45 +74,42 @@ section {
 .counters {
   display: flex;
   justify-content: center;
-  gap: 36px;
-  margin-top: 48px;
+  align-items: center;
+  gap: 26px;
+  margin-top: 42px;
   flex-wrap: wrap;
 }
 
 .counter {
-  background: rgba(255,255,255,0.07);
+  background: rgba(255,255,255,.07);
   padding: 26px 42px;
-  border-radius: 18px;
-  min-width: 160px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
 }
 
 .counter h2 {
-  font-size: 2.7rem;
+  font-size: 2.6rem;
   margin: 0;
 }
 
-/* SECTION TITLES */
-section h2 {
-  font-size: 3.2rem;
-  margin-bottom: 60px;
-}
-
 /* GAMES */
-#games {
-  padding-top: 40px; /* removes big gap after hero */
-}
-
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 36px;
+  margin-top: 60px;
 }
 
 .game-card {
-  background: #0d1222;
-  border-radius: 22px;
+  background: linear-gradient(180deg, #0d1222, #090e1d);
+  border-radius: 26px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0,0,0,.55);
+  box-shadow: 0 40px 90px rgba(0,0,0,.6);
+  transition: transform .25s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
 }
 
 .game-thumb {
@@ -128,8 +124,7 @@ section h2 {
   top: 0;
   width: 100%;
   padding: 14px;
-  text-align: center;
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 900;
   background: linear-gradient(to bottom, rgba(0,0,0,.75), transparent);
 }
@@ -138,24 +133,25 @@ section h2 {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 14px 18px;
-  background: #0a0f1f;
+  padding: 16px 20px;
+  background: #080d1b;
   font-weight: 800;
 }
 
 .play-btn {
   background: #22c55e;
   color: black;
-  padding: 10px 22px;
+  padding: 10px 26px;
   border-radius: 999px;
   text-decoration: none;
+  font-weight: 900;
 }
 
 /* APPLY */
 .apply-box {
-  background: rgba(255,255,255,0.07);
+  background: rgba(255,255,255,.06);
   padding: 42px;
-  border-radius: 22px;
+  border-radius: 26px;
   margin: 32px auto;
   max-width: 640px;
 }
@@ -173,20 +169,21 @@ section h2 {
 
 /* ABOUT */
 .about p {
-  font-size: 1.2rem;
-  max-width: 920px;
+  font-size: 1.15rem;
+  max-width: 900px;
   margin: 26px auto;
   line-height: 1.9;
-  opacity: 0.95;
+  opacity: .95;
 }
 
 /* FOOTER */
 footer {
   padding: 60px 20px;
+  text-align: center;
 }
 
 footer a {
-  margin: 0 18px;
+  margin: 0 20px;
   color: #38bdf8;
   text-decoration: none;
   font-weight: 800;
@@ -214,15 +211,15 @@ footer a {
     <div class="counters">
       <div class="counter">
         <h2 id="totalPlayers">—</h2>
-        <span>Players Online</span>
+        <span>👥 Players Online</span>
       </div>
       <div class="counter">
         <h2 id="totalVisits">—</h2>
-        <span>Total Visits</span>
+        <span>👁️ Total Visits</span>
       </div>
       <div class="counter">
         <h2>3</h2>
-        <span>Games</span>
+        <span>🎮 Games</span>
       </div>
     </div>
   </div>
@@ -258,16 +255,9 @@ footer a {
 <!-- ABOUT -->
 <section id="about" class="about">
   <h2>About Us</h2>
-
   <p>Amazing Games is an independent Roblox game studio founded in January 2025 with one clear mission: to invest in, build, and publish amazing games with real front-page potential.</p>
-
-  <p>We focus on creating experiences that are not only fun to play, but also designed to succeed long-term through strong retention, smart monetization, and replayable core gameplay loops.</p>
-
-  <p>Our studio believes great Roblox games come from the balance of creativity and strategy. This means thoughtful game design, clean and optimized scripting, strong visual identity, polished UI, and monetization that enhances gameplay rather than hurting it.</p>
-
-  <p>Since our founding, Amazing Games has operated with a long-term mindset: build quality first, learn from every release, and continuously raise our standards.</p>
-
-  <p><strong>If it’s amazing, we build it.</strong></p>
+  <p>We focus on strong retention, polished UI, clean scripting, and monetization that enhances gameplay.</p>
+  <p>If it’s amazing — we build it.</p>
 </section>
 
 <!-- CONTACT -->
@@ -280,7 +270,8 @@ footer a {
 </section>
 
 <script>
-const WORKER_URL = "https://YOUR-WORKER-NAME.workers.dev";
+/* 🔴 CHANGE THIS TO YOUR WORKER URL */
+const WORKER_URL = "https://api.amazinggames.cloud/stats";
 
 async function loadGames() {
   const res = await fetch(WORKER_URL);
