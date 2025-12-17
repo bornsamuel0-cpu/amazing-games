@@ -293,17 +293,16 @@ function renderGames() {
   const grid = document.getElementById("gamesGrid");
   grid.innerHTML = "";
 
-  games.forEach(g => {
+  games.forEach(game => {
     grid.innerHTML += `
       <div class="game-card">
-     <div class="game-thumb" style="background-image:url('${game.id}.png')">
-
-          <div class="game-title">${g.name}</div>
+        <div class="game-thumb" style="background-image:url('${game.id}.png')">
+          <div class="game-title">${game.name}</div>
         </div>
         <div class="game-footer">
-          <div id="players-${g.id}">👥 —</div>
-          <a class="play-btn" href="https://www.roblox.com/games/${g.placeId}" target="_blank">▶ PLAY</a>
-          <div id="visits-${g.id}">👁 —</div>
+          <div id="players-${game.id}">👥 —</div>
+          <a class="play-btn" href="https://www.roblox.com/games/${game.placeId}" target="_blank">▶ PLAY</a>
+          <div id="visits-${game.id}">👁 —</div>
         </div>
       </div>
     `;
