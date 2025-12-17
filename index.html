@@ -296,7 +296,8 @@ function renderGames() {
   games.forEach(g => {
     grid.innerHTML += `
       <div class="game-card">
-        <div class="game-thumb" style="background-image:url('https://tr.rbxcdn.com/${g.placeId}/768/432/Image/Png')">
+     <div class="game-thumb" style="background-image:url('${game.id}.png')">
+
           <div class="game-title">${g.name}</div>
         </div>
         <div class="game-footer">
