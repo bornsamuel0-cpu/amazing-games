@@ -101,9 +101,27 @@ section h2 {
   margin: 0;
 }
 
-/* GAMES */
-#games { padding-top: 40px; }
+/* FEATURED */
+.featured {
+  background: linear-gradient(135deg, #1e293b, #020617);
+  border-radius: 26px;
+  padding: 32px;
+  margin-bottom: 60px;
+  box-shadow: 0 40px 120px rgba(0,0,0,.6);
+}
 
+.featured img {
+  width: 100%;
+  border-radius: 18px;
+  margin-bottom: 20px;
+}
+
+.featured h3 {
+  font-size: 2.4rem;
+  margin: 10px 0;
+}
+
+/* GAMES */
 .games-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
@@ -127,16 +145,40 @@ section h2 {
   background-size: cover;
   background-position: center;
   position: relative;
+  margin: 14px;
+  border-radius: 16px;
 }
 
+.game-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.65),
+    rgba(0,0,0,.25),
+    transparent
+  );
+}
+
+/* 🔥 CENTERED + STROKED TITLE */
 .game-title {
   position: absolute;
-  top: 0;
-  width: 100%;
-  padding: 14px;
-  font-size: 1.4rem;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
   font-weight: 900;
-  background: linear-gradient(to bottom, rgba(0,0,0,.75), transparent);
+  text-align: center;
+  padding: 20px;
+  color: #fff;
+  text-shadow:
+    -2px -2px 0 #000,
+     2px -2px 0 #000,
+    -2px  2px 0 #000,
+     2px  2px 0 #000,
+     0 4px 12px rgba(0,0,0,.8);
 }
 
 .game-footer {
@@ -157,33 +199,11 @@ section h2 {
   font-weight: 900;
 }
 
-/* APPLY */
-.apply-box {
-  background: rgba(255,255,255,.07);
-  padding: 42px;
-  border-radius: 22px;
-  margin: 32px auto;
-  max-width: 640px;
-}
-
-.apply-box a {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 14px 30px;
-  background: #38bdf8;
-  color: black;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: 900;
-}
-
-/* ABOUT */
-.about p {
-  font-size: 1.2rem;
-  max-width: 920px;
-  margin: 26px auto;
-  line-height: 1.9;
-  opacity: .95;
+/* MOBILE */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2.6rem; }
+  .hero-content img { width: 240px; }
+  .games-grid { grid-template-columns: 1fr; }
 }
 
 /* FOOTER */
@@ -207,92 +227,51 @@ footer a {
   <a href="#games">Games</a>
   <a href="#apply">Apply</a>
   <a href="#about">About</a>
-  <a href="#contact">Contact</a>
 </nav>
 
-<!-- HOME -->
 <section id="home" class="hero">
   <div class="hero-content">
-    <img src="logo.png" alt="Amazing Games Logo">
+    <img src="logo.png">
     <h1>Amazing Games Studio</h1>
     <p>Building high-quality Roblox experiences designed to reach the front page.</p>
 
     <div class="counters">
-      <div class="counter">
-        <h2 id="totalPlayers">—</h2>
-        <span>Players Online</span>
-      </div>
-      <div class="counter">
-        <h2 id="totalVisits">—</h2>
-        <span>Total Visits</span>
-      </div>
-      <div class="counter">
-        <h2>3</h2>
-        <span>Games</span>
-      </div>
+      <div class="counter"><h2 id="totalPlayers">—</h2>Players Online</div>
+      <div class="counter"><h2 id="totalVisits">—</h2>Total Visits</div>
+      <div class="counter"><h2>3</h2>Games</div>
     </div>
   </div>
 </section>
 
-<!-- GAMES -->
 <section id="games">
   <h2>Our Games</h2>
+  <div id="featuredGame"></div>
   <div class="games-grid" id="gamesGrid"></div>
-</section>
-
-<!-- APPLY -->
-<section id="apply">
-  <h2>Apply</h2>
-
-  <div class="apply-box">
-    <h3>Apply for a Job</h3>
-    <p>Want to apply for a job? Fill out this Google Form to apply.</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScGb9I1iWpLjKjNDKYG8Qn1NDRFFimzN5p_SmoYYOw57-qL_A/viewform" target="_blank">
-      Apply for a Job
-    </a>
-  </div>
-
-  <div class="apply-box">
-    <h3>Looking for Investment?</h3>
-    <p>Submit your game and pitch it to Amazing Games for potential investment.</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSchT5pipyVwRRMcsIXe_RvsfjwI55topk29jd-uLuFlsLL8aQ/viewform" target="_blank">
-      Submit Your Game
-    </a>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="about">
-  <h2>About Us</h2>
-  <p>Amazing Games is an independent Roblox game studio founded in January 2025 with one clear mission: to invest in, build, and publish amazing games with real front-page potential.</p>
-  <p>We focus on long-term success through strong retention, smart monetization, and replayable core gameplay loops.</p>
-  <p>We balance creativity and strategy: clean scripting, polished UI, strong visuals, and monetization that enhances gameplay.</p>
-  <p><strong>If it’s amazing, we build it.</strong></p>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <h2>Get in Touch</h2>
-  <footer>
-    <a href="https://discord.gg/KDgXznhSsc" target="_blank">Discord</a>
-    <a href="https://www.roblox.com/communities/17209770/Amazing-Games-Co#!/about" target="_blank">Roblox Group</a>
-  </footer>
 </section>
 
 <script>
 const API_URL = "https://api.amazinggames.cloud/stats";
 
-/* STATIC GAME LIST (always renders) */
 const games = [
   { id: 7349544299, name: "🔥 Prison Island", placeId: 92661235863904 },
   { id: 6925763113, name: "🚪 99 Rooms in a Basement", placeId: 97441539448665 },
   { id: 8168837991, name: "🍔 Eat Food To Grow Bigger!", placeId: 74672529469747 }
 ];
 
+function animate(el, target) {
+  let start = 0;
+  const step = () => {
+    start += Math.ceil(target / 40);
+    if (start > target) start = target;
+    el.innerText = start.toLocaleString();
+    if (start < target) requestAnimationFrame(step);
+  };
+  step();
+}
+
 function renderGames() {
   const grid = document.getElementById("gamesGrid");
   grid.innerHTML = "";
-
   games.forEach(game => {
     grid.innerHTML += `
       <div class="game-card">
@@ -309,31 +288,34 @@ function renderGames() {
   });
 }
 
-
 async function updateStats() {
-  try {
-    const res = await fetch(API_URL);
-    const json = await res.json();
+  const res = await fetch(API_URL);
+  const json = await res.json();
 
-    let totalPlayers = 0;
-    let totalVisits = 0;
+  let totalPlayers = 0;
+  let totalVisits = 0;
 
-    json.data.forEach(game => {
-      totalPlayers += game.playing || 0;
-      totalVisits += game.visits || 0;
+  json.data.forEach(game => {
+    totalPlayers += game.playing;
+    totalVisits += game.visits;
 
-      const p = document.getElementById(`players-${game.id}`);
-      const v = document.getElementById(`visits-${game.id}`);
+    document.getElementById(`players-${game.id}`).innerText = `👥 ${game.playing}`;
+    document.getElementById(`visits-${game.id}`).innerText = `👁 ${game.visits.toLocaleString()}`;
+  });
 
-      if (p) p.textContent = `👥 ${game.playing ?? 0}`;
-      if (v) v.textContent = `👁 ${game.visits?.toLocaleString() ?? 0}`;
-    });
+  animate(document.getElementById("totalPlayers"), totalPlayers);
+  animate(document.getElementById("totalVisits"), totalVisits);
 
-    document.getElementById("totalPlayers").textContent = totalPlayers.toLocaleString();
-    document.getElementById("totalVisits").textContent = totalVisits.toLocaleString();
-  } catch (e) {
-    console.warn("Stats update failed", e);
-  }
+  const top = [...json.data].sort((a,b)=>b.playing-a.playing)[0];
+  document.getElementById("featuredGame").innerHTML = `
+    <div class="featured">
+      <h2>🔥 Featured Game</h2>
+      <img src="${top.id}.png">
+      <h3>${top.name}</h3>
+      <p>👥 ${top.playing} playing now</p>
+      <a class="play-btn" href="https://www.roblox.com/games/${top.rootPlaceId}" target="_blank">▶ PLAY</a>
+    </div>
+  `;
 }
 
 renderGames();
