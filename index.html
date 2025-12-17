@@ -309,15 +309,11 @@ function renderGames() {
   });
 }
 
+
 async function updateStats() {
   try {
     const res = await fetch(API_URL);
-    const text = await res.text();
-
-    if (!text.trim().startsWith("{")) return;
-
-    const json = JSON.parse(text);
-    if (!json.data) return;
+    const json = await res.json();
 
     let totalPlayers = 0;
     let totalVisits = 0;
@@ -329,13 +325,15 @@ async function updateStats() {
       const p = document.getElementById(`players-${game.id}`);
       const v = document.getElementById(`visits-${game.id}`);
 
-      if (p) p.innerText = `👥 ${game.playing ?? 0}`;
-      if (v) v.innerText = `👁 ${game.visits?.toLocaleString() ?? 0}`;
+      if (p) p.textContent = `👥 ${game.playing ?? 0}`;
+      if (v) v.textContent = `👁 ${game.visits?.toLocaleString() ?? 0}`;
     });
 
-    document.getElementById("totalPlayers").innerText = totalPlayers.toLocaleString();
-    document.getElementById("totalVisits").innerText = totalVisits.toLocaleString();
-  } catch {}
+    document.getElementById("totalPlayers").textContent = totalPlayers.toLocaleString();
+    document.getElementById("totalVisits").textContent = totalVisits.toLocaleString();
+  } catch (e) {
+    console.warn("Stats update failed", e);
+  }
 }
 
 renderGames();
